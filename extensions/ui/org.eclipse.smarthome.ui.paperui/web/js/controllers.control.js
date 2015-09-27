@@ -1,5 +1,6 @@
-angular.module('SmartHomeManagerApp.controllers.control', []).controller('ControlPageController', function($scope, $routeParams, $location, $timeout, itemRepository) {
+angular.module('SmartHomeManagerApp.controllers.control', []).controller('ControlPageController', function($scope, $routeParams, $location, $timeout, itemRepository, sitemapRepository, sitemapService) {
     $scope.items = [];
+    $scope.sitemaps = ['derp'];
     $scope.selectedTabIndex = 0;
     $scope.tabs = [];
     
@@ -49,7 +50,7 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
             $scope.masonry();
         }, true);   
     }
-    
+
     $scope.getItem = function(itemName) {
     	for (var int = 0; int < $scope.data.items.length; int++) {
             var item = $scope.data.items[int];
@@ -59,7 +60,17 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
         }
     	return null;
 	}
-    
+
+    $scope.refreshSitemaps = function() {
+        sitemapRepository.getAll(function(items) {
+            $scope.sitemaps = items;
+        }, true);   
+    }
+
+    $scope.openSitemap = function(link) {
+         window.open("#link","_self");
+    }
+
     $scope.masonry = function() {
         if ($scope.data.items) {
             $timeout(function() {
@@ -67,6 +78,7 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
             }, 0, false);
         }
 	}
+
     $scope.$watch('data.items', function(value) {
     	$scope.masonry();
     });
@@ -74,6 +86,46 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
     	$scope.masonry();
 	});
     $scope.refresh();
+    $scope.refreshSitemaps();
+}).controller('SitemapListController', function($scope, $timeout) {
+}).controller('SitemapController', function($scope, $routeParams, $location, $timeout, sitemapService) {
+    $scope.sitemapId = $routeParams.sitemapId;
+    $scope.pageIds = (! $routeParams.pageIds) ? [] : $routeParams.pageIds.split('/');
+
+    $scope.parrentUrl = '/sitemap/'+$scope.sitemapId;
+    if($scope.pageIds.length > 0){
+        $scope.parrentUrl = '/sitemap/'+$scope.sitemapId+'/'+$scope.pageIds.slice(0,-1).join('/');
+    }
+
+    $scope.go = function ( path ) {
+      $location.path( path );
+    };
+
+    $scope.widgets = [];
+    $scope.getSitemap = function(name) {
+        sitemapService.getSitemap({
+            sitemapName:name
+        }, function(sitemap) {
+            $scope.widgets = sitemap['homepage']['widgets'];
+        }, true);
+    }
+
+    $scope.getPage = function(sitemapId, pageId) {
+        sitemapService.getPage({
+            sitemapName:sitemapId,
+            pageId:pageId,
+        }, function(sitemap) {
+            $scope.widgets = sitemap['widgets'];
+        }, true);
+    }
+
+    if ($scope.pageIds.length <= 0) {
+        $scope.getSitemap($scope.sitemapId);
+    }else {
+        $scope.getPage($scope.sitemapId, $scope.pageIds[$scope.pageIds.length-1]);
+    }
+
+}).controller('WidgetController', function($rootScope, $scope) { 
 }).controller('ControlController', function($scope, $timeout, itemService) {
 	$scope.getItemName = function(itemName) {
         return itemName.replace(/_/g, ' ');
@@ -92,7 +144,7 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
 		}
     }
 	
-	$scope.getMinText = function(item) {
+	$scope.getMinText = function(item) {s
 		if(!item.stateDescription || !item.stateDescription.minimum) {
 			return '';
 		} else if (!item.stateDescription.pattern) {

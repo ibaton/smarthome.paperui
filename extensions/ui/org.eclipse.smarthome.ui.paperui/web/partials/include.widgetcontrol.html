@@ -1,0 +1,75 @@
+<div ng-switch on="widget.type" ng-controller="WidgetController">
+	<div ng-switch-when="Frame">
+	</div>
+
+	<div ng-switch-when="Text">
+        <div layout="row" layout-align="start center" ng-if="widget.linkedPage && widget.label">
+            <div flex="40">
+                <p>{{ widget.label }}</p>
+            </div>
+            <div flex="60" layout="row" layout-align="end center" ng-if="widget.linkedPage">
+                <a ng-href="#/sitemap/{{sitemapId}}/{{pageIds.concat([widget.linkedPage.id]).join('/')}}">Next</a>
+            </div>
+        </div>
+    </div>
+
+	<div ng-switch-when="Image">
+        <div layout="row" layout-align="start center" ng-if="widget.linkedPage && widget.label">
+            <div flex="40">
+                <p>{{ widget.label }}</p>
+            </div>
+            <div flex="60" layout="row" layout-align="end center" ng-if="widget.linkedPage">
+                <a ng-href="#/sitemap/{{sitemapId}}/{{pageIds.concat([widget.linkedPage.id]).join('/')}}">Next</a>
+            </div>
+        </div>
+        <div layout="row" ng-if="widget.url">
+        	<img ng-src="{{ widget.url }}" alt="{{ widget.label }}" />
+        </div>
+    </div>
+
+    <div ng-switch-when="Video">
+        <div layout="row" layout-align="start center" ng-if="widget.linkedPage && widget.label">
+            <div flex="40">
+                <p>{{ widget.label }}</p>
+            </div>
+            <div flex="60" layout="row" layout-align="end center" ng-if="widget.linkedPage">
+                <a ng-href="#/sitemap/{{sitemapId}}/{{pageIds.concat([widget.linkedPage.id]).join('/')}}">Next</a>
+            </div>
+        </div>
+        <div layout="row" ng-if="widget.url">
+	        <video width="320" height="240" controls>
+			  	<source ng-src="{{widget.url}}">
+				Your browser does not support the video tag.
+			</video>
+        </div>
+    </div>
+
+	<div ng-switch-when="Webview">
+        <div layout="row" layout-align="start center" ng-if="widget.linkedPage && widget.label">
+            <div flex="40">
+                <p>{{ widget.label }}</p>
+            </div>
+            <div flex="60" layout="row" layout-align="end center" ng-if="widget.linkedPage">
+                <a ng-href="#/sitemap/{{sitemapId}}/{{pageIds.concat([widget.linkedPage.id]).join('/')}}">Next</a>
+            </div>
+        </div>
+        <div layout="row" ng-if="widget.url">
+        	<iframe ng-src="{{widget.url}}" width="500" height="400"></iframe>
+        </div>
+    </div>
+
+    <div ng-switch-when="Group">
+        <div layout="row" layout-align="start center" ng-if="widget.linkedPage && widget.label">
+            <div flex="40">
+                <p>{{ widget.label }}</p>
+            </div>
+            <div flex="60" layout="row" layout-align="end center" ng-if="widget.linkedPage">
+                <a ng-href="#/sitemap/{{sitemapId}}/{{pageIds.concat([widget.linkedPage.id]).join('/')}}">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <div ng-switch-default>
+    	{{ widget.label }} {{ widget.type }}
+    </div>
+</div>	

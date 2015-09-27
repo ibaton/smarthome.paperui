@@ -16,6 +16,9 @@ angular.module('SmartHomeManagerApp', [
   $routeProvider.
 	when('/control', {templateUrl: 'partials/control.html', controller: 'ControlPageController', title: 'Control', simpleHeader: true}).
 	when('/setup', {redirectTo: '/setup/search'}).
+  when('/sitemap', {templateUrl: 'partials/sitemaplist.html', controller: 'ControlPageController', title: 'Sitemap'}).
+  when('/sitemap/:sitemapId', {templateUrl: 'partials/sitemap.html', controller: 'ControlPageController', title: 'Sitemap'}).
+  when('/sitemap/:sitemapId/:pageIds*', {templateUrl: 'partials/sitemap.html', controller: 'ControlPageController', title: 'Sitemap'}).
 	when('/setup/search', {templateUrl: 'partials/setup.html', controller: 'InboxController', title: 'Setup Wizard'}).
 	when('/setup/manual-setup/choose', {templateUrl: 'partials/setup.html', controller: 'ManualSetupChooseController', title: 'Setup Wizard'}).
 	when('/setup/manual-setup/configure/:thingTypeUID', {templateUrl: 'partials/setup.html', controller: 'ManualSetupConfigureController', title: 'Setup Wizard'}).

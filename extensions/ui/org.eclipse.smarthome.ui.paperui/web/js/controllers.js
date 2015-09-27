@@ -1,5 +1,5 @@
 angular.module('SmartHomeManagerApp.controllers', []).controller('BodyController', function($rootScope, $scope, eventService, 
-        toastService, discoveryResultRepository, thingTypeRepository, bindingRepository) {
+        toastService, discoveryResultRepository, thingTypeRepository, bindingRepository, sitemapRepository) {
 	$scope.scrollTop = 0;
 	$(window).scroll(function() {
 		$scope.$apply(function (scope) {

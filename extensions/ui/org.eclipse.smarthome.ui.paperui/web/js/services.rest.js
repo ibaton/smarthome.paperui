@@ -90,6 +90,28 @@ angular.module('SmartHomeManagerApp.services.rest', ['SmartHomeManagerApp.consta
             url : restConfig.restPath + '/items/:itemName/tags/:tag'
         }
     });
+}).factory('sitemapService', function($resource, restConfig) {
+    return $resource(restConfig.restPath + '/sitemaps', {}, {
+        getAll : {
+            method : 'GET',
+            isArray: true
+        },
+        getSitemap : {
+            method : 'GET',
+            params : {
+                sitemapName : '@sitemapName'
+            },
+            url : restConfig.restPath + '/sitemaps/:sitemapName'
+        },
+        getPage : {
+            method : 'GET',
+            params : {
+                sitemapName : '@sitemapName',
+                pageId : '@pageId'
+            },
+            url : restConfig.restPath + '/sitemaps/:sitemapName/:pageId'
+        }
+    });
 }).factory('bindingService', function($resource, restConfig) {
     return $resource(restConfig.restPath + '/bindings', {}, {
         getAll : {

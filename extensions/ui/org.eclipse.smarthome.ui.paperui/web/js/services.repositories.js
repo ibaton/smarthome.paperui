@@ -171,4 +171,9 @@ angular.module('SmartHomeManagerApp.services.repositories', []).factory('binding
 	var repository = new Repository($q, $rootScope, itemService, 'items')
 	$rootScope.data.items = [];
 	return repository;
+}).factory('sitemapRepository', 
+		function($q, $rootScope, sitemapService) {
+	var repository = new Repository($q, $rootScope, sitemapService, 'sitemaps')
+	$rootScope.data.sitemaps = [];
+	return repository;
 });

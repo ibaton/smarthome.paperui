@@ -1,0 +1,16 @@
+<section id="main">
+	<div class="container">
+		<div ng-controller="SitemapListController" class="items row">
+			<div class="col-lg-4 col-sm-6 col-xs-12 item-wrapper"
+				ng-repeat="sitemap in sitemaps" ng-click="$location.path('/sitemap/'+sitemap['name'])">
+
+				<div class="card">
+					<div class="clabel">
+						<h3>{{ sitemap['label'] }}</h3>
+						<h4>{{ sitemap['name'] }}<h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
